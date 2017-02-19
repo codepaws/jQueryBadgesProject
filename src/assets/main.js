@@ -6,17 +6,13 @@ $(function() {
     url: endpoint,
     dataType: 'jsonp',
     success: (response) => {
-      console.log(response);
       let {badges, courses} = response;
 
       for(let course of courses.completed) {
-        $('#badges').append(`
-          <div class="course">
-            <h3>${course.title}</h3>
-            <img src="${course.badge}" />
-            <a href="${course.url}" class="btn btn-primary" target="_blank">See Course</a>
-          </div>`
-        );
+        let div = $('<div />', {'class': 'course'}).appendTo($('#badges'))
+        $('<h3 />', {text: course.title}).appendTo(div);
+        $('<img />', {src: course.badge}).appendTo(div);
+        $('<a />', {'class': 'btn btn-primary', target: '_blank', href: course.url, text: 'See Course'}).appendTo(div);
       }
     }
   })
